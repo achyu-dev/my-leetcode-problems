@@ -17,7 +17,8 @@ public:
             // Find the column index of the maximum element in the midRow
             int maxColIndex = 0;
             for (int j = 1; j < cols; ++j) {
-                if (mat[midRow][j] > mat[midRow][maxColIndex]) {
+                if (mat[midRow][j] > mat[midRow][maxColIndex]) { // Find max in the row why? 
+                    // because peak element is greater than its neighbors
                     maxColIndex = j;
                 }
             }
