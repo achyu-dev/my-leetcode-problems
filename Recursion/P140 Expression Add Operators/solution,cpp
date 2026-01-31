@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    vector<string> ans;
+    vector<string> addOperators(string num, int target) {
+        dfs(0,"",0,0,num,target);
+        return ans;
+    }
+    void dfs(int i, string path, long rescal, long prev, string s, int target) {
+        if (i == s.size()) {
+            if (rescal == target) ans.push_back(path);
+            return;
+        }
+        for (int j = i; j < s.size(); j++) {
+            //skip leading zero number
+            if (j>i && s[i] == '0') break;
+            string token = s.substr(i, j-i+1);
+            long curr = stoll(token);
+
+            if (i == 0) {
+                dfs(j+1,path+token,curr,curr,s,target); //pick
+            } else {
+                dfs(j+1,path+'+'+token,rescal+curr,curr,s,target);
+                dfs(j+1,path+'-'+token,rescal-curr,-curr,s,target);
+                dfs(j+1,path+'*'+token,rescal-prev+prev*curr,prev*curr,s,target);
+            }
+        }
+    } 
+};
+
+int main() {
+    Solution sol;
+    string num = "123";
+    int target = 6;
+    vector<string> result = sol.addOperators(num, target);
+    for (const string& expr : result) {
+        cout << expr << endl;
+    }
+    return 0;
+}
